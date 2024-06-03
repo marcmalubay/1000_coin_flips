@@ -1,5 +1,21 @@
 'use client';
-import Button from "./components/CustomButtonComponent";
+import React from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  IconButton,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 
 var round = 0;
 var t = 0;
@@ -47,8 +63,28 @@ export default function Home() {
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+        <div className="fixed flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           <Button 
+          border="none"
+          color="teal"
+          height = "200px"
+          onClick={() => calculate()}
+          radius = "50%"
+          width = "200px"
+          children = "Calculate Number of Coin Flips"
+        />
+        </div>
+        <div className="fixed flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+          <Button 
+          border="none"
+          color="teal"
+          height = "200px"
+          onClick={() => calculate()}
+          radius = "50%"
+          width = "200px"
+          children = "Calculate Number of Coin Flips"
+        />
+        <Button 
           border="none"
           color="teal"
           height = "200px"
