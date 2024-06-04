@@ -7,6 +7,8 @@ import {
   Flex,
   VStack,
   HStack,
+  Divider,
+  ScaleFade,
   Text
 } from '@chakra-ui/react';
 
@@ -17,6 +19,7 @@ var max_participants = 1000;
 var participants = max_participants;
 
 export default function Home() {
+  const [isOpen, onToggle] = useState(false);
   
   var [participant_text, set_participant_text] = useState("Participants Left: " + participants) ;
   var [tails_text, set_tails_text] = useState("Tails: " + t) ;
@@ -33,6 +36,8 @@ export default function Home() {
   }
   
   const set_textbox = () => {
+    onToggle(false)
+    setTimeout(() => onToggle(true), 100);
     set_participant_text("Participants: " + participants)
     set_tails_text("Tails: " + t)
     set_heads_text("Heads: " + h)
@@ -71,24 +76,39 @@ export default function Home() {
     <main className="flex min-h-screen flex-co justify-between">
       <ChakraProvider>
       <Box height="7vh" bg="blue.500" color="white" textAlign="center">
-        <Text fontSize="xl" fontWeight="bold" p={6} display="flex" alignItems="center" justifyContent="center">
+        <Text fontSize="xl" fontWeight="bold" height ="100%" display="flex" alignItems="center" justifyContent="center">
           The 1000 Coin Flip Experiment
         </Text>
       </Box>
         <Box minH="93vh" bgGradient="linear(to-b, gray.200, gray.500)">
-          <Flex height="70vh" alignItems="center" justifyContent="center">
-            <VStack spacing={90} align="center" justify="center">
+          <Flex height="60vh" alignItems="center" justifyContent="center">
+          <VStack spacing={8} align='center'>
+                <Divider orientation='horizontal' width={"50%"} borderColor="black"/>
+                <Box color="black" p={4} width={"70%"} textAlign="center" borderRadius={8}>
+                  <Text 
+                    justifyContent="center"
+                    fontSize="xl" >
+                    In this simulated environment, a select number of participants will be given a coin. Participants who land tails will be allowed to advance into the next round, while those who land heads must sit out. This experiment measures the likelihood of landing tails a certain amount of times in a row. Although not certain, it is likely that out of 1000 coin flips, one participant will land tails 10 times in a row.
+                  </Text>
+                </Box>
+                <Divider orientation='horizontal' width={"50%"} borderColor="black"/>
                 <Button
                   p={6} 
                   colorScheme='blue' 
                   variant='solid'
-                  onClick={() => calculate()}>
+                  onClick={() => calculate()}
+                  _hover={{
+                    transform: "scale(1.1)",
+                    transition: "transform 0.2s",
+                  }}>
+                    
                   <Text 
                     fontSize="xl" 
                     fontWeight="bold">
                     Calculate Number of Coin Flips
                   </Text>
                 </Button>
+                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
                 <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                   <Text 
                       fontSize="xl" 
@@ -96,14 +116,17 @@ export default function Home() {
                       {round_text}
                     </Text>
                   </Box>
-                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
-                  <Text 
+                </ScaleFade>
+                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
+                  <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
+                    <Text 
                       fontSize="xl" 
                       fontWeight="bold">
                       {participant_text}
                     </Text>
                   </Box>
-
+                </ScaleFade>
+                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0.1 } }}>
                 <HStack spacing={4} align="center" justify="center">
                   <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
                   <Text 
@@ -120,7 +143,8 @@ export default function Home() {
                     </Text>
                   </Box>
                 </HStack>
-              </VStack>
+                </ScaleFade>
+                </VStack>
           </Flex>
         </Box>
       </ChakraProvider>
