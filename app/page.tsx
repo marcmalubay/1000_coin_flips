@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import {
   Button,
-  ChakraProvider, 
+  ChakraProvider,
   Box,
   Flex,
   VStack,
@@ -20,21 +20,21 @@ var participants = max_participants;
 
 export default function Home() {
   const [isOpen, onToggle] = useState(false);
-  
-  var [participant_text, set_participant_text] = useState("Participants Left: " + participants) ;
-  var [tails_text, set_tails_text] = useState("Tails: " + t) ;
-  var [heads_text, set_heads_text] = useState("Heads: " + h) ;
-  var [round_text, set_rounds_text] = useState("Round: " + round) ;
 
-  const flip = () =>{
+  var [participant_text, set_participant_text] = useState("Participants Left: " + participants);
+  var [tails_text, set_tails_text] = useState("Tails: " + t);
+  var [heads_text, set_heads_text] = useState("Heads: " + h);
+  var [round_text, set_rounds_text] = useState("Round: " + round);
+
+  const flip = () => {
     var toss = Math.floor(Math.random() * 2) == 0;
-    if (toss){
+    if (toss) {
       return "tails"
     } else {
       return "heads"
     }
   }
-  
+
   const set_textbox = () => {
     onToggle(false)
     setTimeout(() => onToggle(true), 100);
@@ -47,9 +47,9 @@ export default function Home() {
   const calculate = () => {
     t = 0;
     h = 0;
-  
-    for (var i=0; i < participants; i++) {
-      if (flip() == "tails"){
+
+    for (var i = 0; i < participants; i++) {
+      if (flip() == "tails") {
         t += 1;
       } else {
         h += 1;
@@ -59,92 +59,95 @@ export default function Home() {
     set_textbox();
 
     participants = t;
-  
 
-    if (participants == 1){
+
+    if (participants == 1) {
       participants = max_participants;
       round = 0;
 
-    } else if (participants <= 0){
+    } else if (participants <= 0) {
       participants = max_participants;
       round = 0;
     }
   }
 
   return (
-    
+
     <main className="flex min-h-screen flex-co justify-between">
       <ChakraProvider>
-      <Box height="7vh" bg="blue.500" color="white" textAlign="center">
-        <Text fontSize="xl" fontWeight="bold" height ="100%" display="flex" alignItems="center" justifyContent="center">
-          The 1000 Coin Flip Experiment
-        </Text>
-      </Box>
-        <Box minH="93vh" bgGradient="linear(to-b, gray.200, gray.500)">
-          <Flex height="60vh" alignItems="center" justifyContent="center">
-          <VStack spacing={8} align='center'>
-                <Divider orientation='horizontal' width={"50%"} borderColor="black"/>
-                <Box color="black" p={4} width={"70%"} textAlign="center" borderRadius={8}>
-                  <Text 
-                    justifyContent="center"
-                    fontSize="xl" >
-                    In this simulated environment, a select number of participants will be given a coin. Participants who land tails will be allowed to advance into the next round, while those who land heads must sit out. This experiment measures the likelihood of landing tails a certain amount of times in a row. Although not certain, it is likely that out of 1000 coin flips, one participant will land tails 10 times in a row.
+        <Box position="fixed" top="0" left="0" right="0" bottom="0" bgGradient="linear(to-b, gray.200, gray.500)">
+          <Box bg="blue.500" color="white" textAlign="center">
+            <Text fontSize="xl" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
+              The 1000 Coin Flip Experiment
+            </Text>
+          </Box>
+          <Flex alignItems="center" justifyContent="center">
+            <VStack spacing={15} align='center'>
+              <Divider mt="10vh" orientation='horizontal' width={"50%"} borderColor="black" />
+              <Box color="black" p={4} width={"70%"} textAlign="center" borderRadius={8}>
+                <Text
+                  justifyContent="center"
+                  fontSize="xl"
+                  height="20%" >
+                  In this simulated environment, a select number of participants will be given a coin. Participants who land tails will be allowed to advance into the next round, while those who land heads must sit out. This experiment measures the likelihood of landing tails a certain amount of times in a row. Although not certain, it is likely that out of 1000 coin flips, one participant will land tails 10 times in a row.
+                </Text>
+              </Box>
+              <Divider orientation='horizontal' width={"50%"} borderColor="black" />
+              <Button
+                mt="10vh"
+                p={6}
+                colorScheme='blue'
+                variant='solid'
+                onClick={() => calculate()}
+                _hover={{
+                  transform: "scale(1.1)",
+                  transition: "transform 0.2s",
+                }}
+                borderRadius={24}>
+
+                <Text
+                  fontSize="xl"
+                  fontWeight="bold">
+                  Calculate Number of Coin Flips
+                </Text>
+              </Button>
+              <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
+                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
+                  <Text
+                    fontSize="xl"
+                    fontWeight="bold">
+                    {round_text}
                   </Text>
                 </Box>
-                <Divider orientation='horizontal' width={"50%"} borderColor="black"/>
-                <Button
-                  p={6} 
-                  colorScheme='blue' 
-                  variant='solid'
-                  onClick={() => calculate()}
-                  _hover={{
-                    transform: "scale(1.1)",
-                    transition: "transform 0.2s",
-                  }}>
-                    
-                  <Text 
-                    fontSize="xl" 
+              </ScaleFade>
+              <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
+                <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
+                  <Text
+                    fontSize="xl"
                     fontWeight="bold">
-                    Calculate Number of Coin Flips
+                    {participant_text}
                   </Text>
-                </Button>
-                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
-                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
-                  <Text 
-                      fontSize="xl" 
-                      fontWeight="bold">
-                      {round_text}
-                    </Text>
-                  </Box>
-                </ScaleFade>
-                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
-                  <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
-                    <Text 
-                      fontSize="xl" 
-                      fontWeight="bold">
-                      {participant_text}
-                    </Text>
-                  </Box>
-                </ScaleFade>
-                <ScaleFade initialScale={0.1} in={isOpen} reverse = {true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0.1 } }}>
+                </Box>
+              </ScaleFade>
+              <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0.1 } }}>
                 <HStack spacing={4} align="center" justify="center">
                   <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
-                  <Text 
-                      fontSize="xl" 
+                    <Text
+                      fontSize="xl"
                       fontWeight="bold">
                       {tails_text}
                     </Text>
                   </Box>
                   <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8}>
-                  <Text 
-                      fontSize="xl" 
+                    <Text
+                      fontSize="xl"
                       fontWeight="bold">
                       {heads_text}
                     </Text>
                   </Box>
                 </HStack>
-                </ScaleFade>
-                </VStack>
+              </ScaleFade>
+            </VStack>
           </Flex>
         </Box>
       </ChakraProvider>
