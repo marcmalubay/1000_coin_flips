@@ -1,5 +1,20 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import React, { FC } from 'react';
+import {
+    Box,
+    Image,
+    Text
+  } from '@chakra-ui/react';
 
-const inter = Inter({ subsets: ["latin"] });
+interface Props {
+    eliminated: boolean;
+}
+
+const Title: FC<Props> = ({eliminated}) => {
+    return (
+      <>
+        <Image src="/images/ParticipantMale.png" boxSize="100px"></Image>
+      </>
+    );
+  };
+  
+  export default Title;
