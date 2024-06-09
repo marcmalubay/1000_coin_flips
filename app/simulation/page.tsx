@@ -9,7 +9,8 @@ import {
     HStack,
     Divider,
     ScaleFade,
-    Text
+    Text,
+    Grid
 } from '@chakra-ui/react';
 import Participant from '../components/participant'
 
@@ -19,8 +20,19 @@ var h = 0;
 var max_participants = 1000;
 var participants = max_participants;
 
+const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
+    const components = [];
+
+    for (let i = 0; i < count; i++) {
+        components.push(<Participant eliminated={false} count={participants} key={i} />);
+    }
+
+    return <>{components}</>;
+};
+
+
 export default function Simulation() {
-    const [isOpen, onToggle] = useState(false);
+    const [isOpen, onToggle] = useState(true);
 
     var [participant_text, set_participant_text] = useState("Participants Left: " + participants);
     var [tails_text, set_tails_text] = useState("Tails: " + t);
@@ -57,10 +69,9 @@ export default function Simulation() {
             }
         }
         round += 1;
-        set_textbox();
 
         participants = t;
-
+        set_textbox();
 
         if (participants == 1) {
             participants = max_participants;
@@ -83,7 +94,7 @@ export default function Simulation() {
                         </Text>
                     </Box>
                     <Flex alignItems="center" justifyContent="center">
-                        <VStack spacing={20} align='center'>
+                        <VStack spacing={4} align='center'>
                             <Button
                                 mt="10vh"
                                 p={6}
@@ -102,11 +113,30 @@ export default function Simulation() {
                                     Calculate Number of Coin Flips
                                 </Text>
                             </Button>
-                            <Box>
-                                <Participant eliminated={false} >
 
-                                </Participant>
+                            <Box width={"90%"} 
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="center"
+                                justifyContent="center">
+                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
+
+                                <Grid mt="3vh" templateColumns='repeat(100, 1fr)' placeItems="center" gap={0}>
+                                    
+                                        <RenderComponents count={participants} />
+                                </Grid>
+                                
+                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
                             </Box>
+                            <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
+                                <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="bold">
+                                        {participant_text}
+                                    </Text>
+                                </Box>
+                            </ScaleFade>
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                                     <Text
@@ -116,25 +146,16 @@ export default function Simulation() {
                                     </Text>
                                 </Box>
                             </ScaleFade>
-                            <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
-                                <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
-                                    <Text
-                                        fontSize="xl"
-                                        fontWeight="bold">
-                                        {participant_text}
-                                    </Text>
-                                </Box>
-                            </ScaleFade>
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <HStack spacing={4} align="center" justify="center">
-                                    <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8} >
+                                    <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                         <Text
                                             fontSize="xl"
                                             fontWeight="bold">
                                             {tails_text}
                                         </Text>
                                     </Box>
-                                    <Box bg="blue.500" color="white" p={8} textAlign="center" borderRadius={8}>
+                                    <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                                         <Text
                                             fontSize="xl"
                                             fontWeight="bold">
