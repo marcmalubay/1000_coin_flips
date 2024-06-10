@@ -10,7 +10,7 @@ import {
     Divider,
     ScaleFade,
     Text,
-    Grid
+    SimpleGrid
 } from '@chakra-ui/react';
 import Participant from '../components/participant'
 
@@ -22,9 +22,13 @@ var participants = max_participants;
 
 const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
     const components = [];
+    var yup = round;
+    if (yup == 0) {
+        yup = 0.75
+    }
 
     for (let i = 0; i < count; i++) {
-        components.push(<Participant eliminated={false} count={participants} key={i} />);
+        components.push(<Participant eliminated={false} count={yup} key={i} />);
     }
 
     return <>{components}</>;
@@ -47,7 +51,7 @@ export default function Simulation() {
             return "heads"
         }
     }
-
+    // free oso
     const set_textbox = () => {
         onToggle(false)
         setTimeout(() => onToggle(true), 100);
@@ -68,19 +72,19 @@ export default function Simulation() {
                 h += 1;
             }
         }
-        round += 1;
 
+        round += 1;
         participants = t;
-        set_textbox();
 
         if (participants == 1) {
             participants = max_participants;
             round = 0;
-
+            
         } else if (participants <= 0) {
             participants = max_participants;
             round = 0;
         }
+        set_textbox();
     }
 
     return (
@@ -114,6 +118,7 @@ export default function Simulation() {
                                 </Text>
                             </Button>
 
+
                             <Box width={"90%"} 
                                 display="flex"
                                 flexDirection="column"
@@ -121,10 +126,18 @@ export default function Simulation() {
                                 justifyContent="center">
                                 <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
 
-                                <Grid mt="3vh" templateColumns='repeat(100, 1fr)' placeItems="center" gap={0}>
-                                    
+                                <SimpleGrid 
+                                    mt="3vh" 
+                                    justifyContent={"center"} 
+                                    alignContent={"center"} 
+                                    display={"flex"} 
+                                    flexWrap={"wrap"}
+                                    minChildWidth="50px"
+                                    >
+
                                         <RenderComponents count={participants} />
-                                </Grid>
+
+                                </SimpleGrid>
                                 
                                 <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
                             </Box>
