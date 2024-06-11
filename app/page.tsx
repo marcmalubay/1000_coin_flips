@@ -19,7 +19,7 @@ export default function Home() {
       <ChakraProvider>
         <Box position="fixed" top="0" left="0" right="0" bottom="0" bgGradient="linear(to-b, gray.200, gray.500)">
           <Box bg="blue.500" color="white" textAlign="center" height="6%">
-            <Text fontSize="xl" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
+            <Text fontSize="calc(1vw + 1vh)" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
               The 1000 Coin Flip Experiment
             </Text>
           </Box>
@@ -29,7 +29,7 @@ export default function Home() {
               <Box color="black" p={4} width={"70%"} textAlign="center" borderRadius={8}>
                 <Text
                   justifyContent="center"
-                  fontSize="xl"
+                  fontSize="calc(1vw + 1.2vh)"
                   height="20%" >
                   In this simulated environment, a select number of participants will be given a coin. Participants who land tails will be allowed to advance into the next round, while those who land heads must sit out. This experiment measures the likelihood of landing tails a certain amount of times in a row. Although not certain, it is likely that out of 1000 coin flips, one participant will land tails 10 times in a row.
                 </Text>
@@ -48,7 +48,7 @@ export default function Home() {
                   borderRadius={24}>
 
                   <Text
-                    fontSize="xl"
+                    fontSize="calc(1vw + 1vh)"
                     fontWeight="bold">
                     Begin Simulation
                   </Text>

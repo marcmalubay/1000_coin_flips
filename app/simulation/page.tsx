@@ -93,7 +93,7 @@ export default function Simulation() {
             <ChakraProvider>
                 <Box position="fixed" top="0" left="0" right="0" bottom="0" bgGradient="linear(to-b, gray.200, gray.500)">
                     <Box bg="blue.500" color="white" textAlign="center" height="6%">
-                        <Text fontSize="xl" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
+                        <Text fontSize="calc(1vw + 1vh)" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
                             The 1000 Coin Flip Experiment
                         </Text>
                     </Box>
@@ -112,7 +112,7 @@ export default function Simulation() {
                                 borderRadius={24}>
 
                                 <Text
-                                    fontSize="xl"
+                                    fontSize="calc(1vw + 1vh)"
                                     fontWeight="bold">
                                     Calculate Number of Coin Flips
                                 </Text>
@@ -144,7 +144,7 @@ export default function Simulation() {
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                     <Text
-                                        fontSize="xl"
+                                        fontSize="calc(1vw + 1vh)"
                                         fontWeight="bold">
                                         {participant_text}
                                     </Text>
@@ -153,7 +153,7 @@ export default function Simulation() {
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                                     <Text
-                                        fontSize="xl"
+                                        fontSize="calc(1vw + 1vh)"
                                         fontWeight="bold">
                                         {round_text}
                                     </Text>
@@ -163,14 +163,14 @@ export default function Simulation() {
                                 <HStack spacing={4} align="center" justify="center">
                                     <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                         <Text
-                                            fontSize="xl"
+                                            fontSize="calc(1vw + 1vh)"
                                             fontWeight="bold">
                                             {tails_text}
                                         </Text>
                                     </Box>
                                     <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                                         <Text
-                                            fontSize="xl"
+                                            fontSize="calc(1vw + 1vh)"
                                             fontWeight="bold">
                                             {heads_text}
                                         </Text>

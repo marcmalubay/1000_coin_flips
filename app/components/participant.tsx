@@ -13,11 +13,12 @@ interface Props {
 
 const Title: FC<Props> = ({ eliminated, count }) => {
   const calculateSize = (cc: number) => {
-    const maxWidth = 40; // Maximum width for the image
-    const minWidth = 80;  // Minimum width for the image
+    const maxWidth = 1.5; // Maximum width for the image
+    const minWidth = 2.5;  // Minimum width for the image
     
-    const size = Math.min(minWidth, maxWidth * (cc / 1.9));
-    return `${size}px`;
+    const size = Math.min(minWidth, maxWidth * (cc / 2));
+    const size2 = size
+    return  `calc(${size}vh + ${size2}vw)`;
   };
 
   return (
