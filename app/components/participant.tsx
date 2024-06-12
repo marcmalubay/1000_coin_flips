@@ -16,7 +16,7 @@ const Title: FC<Props> = ({ eliminated, count }) => {
     const maxWidth = 1.5; // Maximum width for the image
     const minWidth = 2.5;  // Minimum width for the image
     
-    const size = Math.min(minWidth, maxWidth * (cc / 2));
+    const size = Math.min(minWidth, maxWidth * (cc / 2.6));
     const size2 = size
     return  `calc(${size}vh + ${size2}vw)`;
   };

@@ -51,7 +51,7 @@ export default function Simulation() {
             return "heads"
         }
     }
-    // free oso
+
     const set_textbox = () => {
         onToggle(false)
         setTimeout(() => onToggle(true), 100);
@@ -80,18 +80,18 @@ export default function Simulation() {
             participants = max_participants;
             round = 0;
             
+            
         } else if (participants <= 0) {
             participants = max_participants;
             round = 0;
-        }
-        set_textbox();
+        } else {set_textbox();}
     }
 
     return (
 
-        <main className="flex min-h-screen flex-co justify-between">
+        <main>
             <ChakraProvider>
-                <Box position="fixed" top="0" left="0" right="0" bottom="0" bgGradient="linear(to-b, gray.200, gray.500)">
+                <Box height="100vh" bgGradient="linear(to-b, gray.200, gray.500)">
                     <Box bg="blue.500" color="white" textAlign="center" height="6%">
                         <Text fontSize="calc(1vw + 1vh)" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
                             The 1000 Coin Flip Experiment
