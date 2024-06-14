@@ -34,7 +34,6 @@ const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
     return <>{components}</>;
 };
 
-export default function Simulation() {
 
 export default function Simulation() {
     const [isOpen, onToggle] = useState(true);
@@ -80,12 +79,12 @@ export default function Simulation() {
         if (participants == 1) {
             participants = max_participants;
             round = 0;
-            
-            
+
+
         } else if (participants <= 0) {
             participants = max_participants;
             round = 0;
-        } 
+        }
         set_textbox();
     }
 
@@ -118,6 +117,30 @@ export default function Simulation() {
                                     Calculate Number of Coin Flips
                                 </Text>
                             </Button>
+
+                            <Box width={"90%"}
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="center"
+                                justifyContent="center">
+                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
+
+                                <SimpleGrid
+                                    mt="3vh"
+                                    justifyContent={"center"}
+                                    alignContent={"center"}
+                                    display={"flex"}
+                                    flexWrap={"wrap"}
+                                    minChildWidth="50px"
+                                >
+
+                                    <RenderComponents count={participants} />
+
+                                </SimpleGrid>
+
+                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
+                            </Box>
+
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                     <Text
