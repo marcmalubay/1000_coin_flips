@@ -8,10 +8,11 @@ import { countReset } from 'console';
 interface Props {
   eliminated: boolean;
   count: number;
+  num: number;
 }
 
 
-const Title: FC<Props> = ({ eliminated, count }) => {
+const Title: FC<Props> = ({ eliminated, count, num }) => {
   const calculateSize = (cc: number) => {
     const maxWidth = 1.5; // Maximum width for the image
     const minWidth = 2.5;  // Minimum width for the image
@@ -32,7 +33,7 @@ const Title: FC<Props> = ({ eliminated, count }) => {
           filter: "brightness(0.3) invert(1)",
         }}
       >
-        <Box  boxSize={calculateSize(count)} overflow="hidden">
+        <Box className={"" + num} boxSize={calculateSize(count)} overflow="hidden">
           <Image src="/images/ParticipantMale.png"></Image>
         </Box>
       </Box>

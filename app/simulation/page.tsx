@@ -28,12 +28,13 @@ const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
     }
 
     for (let i = 0; i < count; i++) {
-        components.push(<Participant eliminated={false} count={yup} key={i} />);
+        components.push(<Participant eliminated={false} count={yup} num={i} key={i} />);
     }
 
     return <>{components}</>;
 };
 
+export default function Simulation() {
 
 export default function Simulation() {
     const [isOpen, onToggle] = useState(true);
@@ -84,11 +85,11 @@ export default function Simulation() {
         } else if (participants <= 0) {
             participants = max_participants;
             round = 0;
-        } else {set_textbox();}
+        } 
+        set_textbox();
     }
 
     return (
-
         <main>
             <ChakraProvider>
                 <Box height="100vh" bgGradient="linear(to-b, gray.200, gray.500)">
@@ -100,7 +101,7 @@ export default function Simulation() {
                     <Flex alignItems="center" justifyContent="center">
                         <VStack spacing={4} align='center'>
                             <Button
-                                mt="10vh"
+                                mt="5vh"
                                 p={6}
                                 colorScheme='blue'
                                 variant='solid'
@@ -117,30 +118,6 @@ export default function Simulation() {
                                     Calculate Number of Coin Flips
                                 </Text>
                             </Button>
-
-
-                            <Box width={"90%"} 
-                                display="flex"
-                                flexDirection="column"
-                                alignItems="center"
-                                justifyContent="center">
-                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
-
-                                <SimpleGrid 
-                                    mt="3vh" 
-                                    justifyContent={"center"} 
-                                    alignContent={"center"} 
-                                    display={"flex"} 
-                                    flexWrap={"wrap"}
-                                    minChildWidth="50px"
-                                    >
-
-                                        <RenderComponents count={participants} />
-
-                                </SimpleGrid>
-                                
-                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
-                            </Box>
                             <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                     <Text
