@@ -10,6 +10,7 @@ import {
     Divider,
     ScaleFade,
     Text,
+    Collapse,
     SimpleGrid
 } from '@chakra-ui/react';
 import Participant from '../components/participant'
@@ -33,7 +34,6 @@ const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
 
     return <>{components}</>;
 };
-
 
 export default function Simulation() {
     const [isOpen, onToggle] = useState(true);
@@ -114,7 +114,7 @@ export default function Simulation() {
                                 <Text
                                     fontSize="calc(1vw + 1vh)"
                                     fontWeight="bold">
-                                    Calculate Number of Coin Flips
+                                    Flip Coin
                                 </Text>
                             </Button>
 
@@ -123,6 +123,7 @@ export default function Simulation() {
                                 flexDirection="column"
                                 alignItems="center"
                                 justifyContent="center">
+                                <Collapse in={isOpen} transition={{ enter: { duration: .5, delay: .5}, exit: { duration: 0.1 } }}>
                                 <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
 
                                 <SimpleGrid
@@ -139,48 +140,49 @@ export default function Simulation() {
                                 </SimpleGrid>
 
                                 <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
-                            </Box>
+                            </Collapse>
+                        </Box>
 
-                            <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 0.2 }, exit: { duration: 0.1 } }}>
-                                <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
+                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 1.2 }, exit: { duration: 0.1 } }}>
+                            <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
+                                <Text
+                                    fontSize="calc(1vw + 1vh)"
+                                    fontWeight="bold">
+                                    {participant_text}
+                                </Text>
+                            </Box>
+                        </ScaleFade>
+                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 1.3 }, exit: { duration: 0.1 } }}>
+                            <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
+                                <Text
+                                    fontSize="calc(1vw + 1vh)"
+                                    fontWeight="bold">
+                                    {round_text}
+                                </Text>
+                            </Box>
+                        </ScaleFade>
+                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 1.4 }, exit: { duration: 0.1 } }}>
+                            <HStack spacing={4} align="center" justify="center">
+                                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
                                     <Text
                                         fontSize="calc(1vw + 1vh)"
                                         fontWeight="bold">
-                                        {participant_text}
+                                        {tails_text}
                                     </Text>
                                 </Box>
-                            </ScaleFade>
-                            <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 0.2 }, exit: { duration: 0.1 } }}>
                                 <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
                                     <Text
                                         fontSize="calc(1vw + 1vh)"
                                         fontWeight="bold">
-                                        {round_text}
+                                        {heads_text}
                                     </Text>
                                 </Box>
-                            </ScaleFade>
-                            <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0.1 } }}>
-                                <HStack spacing={4} align="center" justify="center">
-                                    <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
-                                        <Text
-                                            fontSize="calc(1vw + 1vh)"
-                                            fontWeight="bold">
-                                            {tails_text}
-                                        </Text>
-                                    </Box>
-                                    <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
-                                        <Text
-                                            fontSize="calc(1vw + 1vh)"
-                                            fontWeight="bold">
-                                            {heads_text}
-                                        </Text>
-                                    </Box>
-                                </HStack>
-                            </ScaleFade>
-                        </VStack>
-                    </Flex>
-                </Box>
-            </ChakraProvider>
-        </main>
+                            </HStack>
+                        </ScaleFade>
+                    </VStack>
+                </Flex>
+            </Box>
+        </ChakraProvider>
+        </main >
     );
 }
