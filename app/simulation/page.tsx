@@ -12,6 +12,7 @@ import {
     ScaleFade,
     Text,
     Collapse,
+    Link,
     SimpleGrid
 } from '@chakra-ui/react';
 import Participant from '../components/participant'
@@ -117,11 +118,13 @@ export default function Simulation() {
         <main className={inconsolata.className}>
             <ChakraProvider>
                 <Box height="100vh" bg="gray.900">
+                    <Link href="/..">
                     <Box bg="gray.800" color="white" textAlign="center" height="6%">
                         <Text fontSize="calc(1vw + 1vh)" height="100%" display="flex" alignItems="center" justifyContent="center">
                             The 1000 Coin Flip Experiment
                         </Text>
                     </Box>
+                    </Link>
                     <Flex alignItems="center" justifyContent="center">
                         <VStack spacing={4} align='center'>
                             <Button

@@ -13,7 +13,7 @@ const Title: FC<Props> = ({ tails }) => {
   const complete = (t: number) => {
     var s = "The experiment is complete! One participant made it to the end."
     if (t == 0) {
-      s = "The experiment is complete! No participant was able to land tails consequtively to the end."
+      s = "The experiment is complete! No participant was able to land tails consecutively to the end."
     }
     return(s)
   }
