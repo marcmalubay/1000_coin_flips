@@ -25,7 +25,7 @@ const Title: FC<Props> = ({ eliminated, count, num }) => {
   return (
     <>
       <Box
-        filter="none"
+        filter="brightness(0.3) invert(1)"
         transition="filter .5s ease"
         _hover={{
           transform: "scale(1.3)",

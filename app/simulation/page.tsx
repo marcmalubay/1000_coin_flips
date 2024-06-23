@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import {
     Button,
@@ -14,12 +15,21 @@ import {
     SimpleGrid
 } from '@chakra-ui/react';
 import Participant from '../components/participant'
+import WinScreen from '../components/winscreen'
+import { Inconsolata } from '@next/font/google';
+
+const inconsolata = Inconsolata({
+    weight: ['400', '700'],
+    subsets: ['latin'],
+});
 
 var round = 0;
+var round_text = round;
 var t = 0;
 var h = 0;
 var max_participants = 1000;
 var participants = max_participants;
+var done = false;
 
 const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
     const components = [];
@@ -28,20 +38,21 @@ const RenderComponents: React.FC<{ count: number }> = ({ count }) => {
         yup = 0.75
     }
 
+
+    if (done == true) {
+        components.push(<WinScreen tails={t} />)
+        return <>{components}</>;
+    }
     for (let i = 0; i < count; i++) {
         components.push(<Participant eliminated={false} count={yup} num={i} key={i} />);
     }
-
     return <>{components}</>;
+
+
 };
 
 export default function Simulation() {
     const [isOpen, onToggle] = useState(true);
-
-    var [participant_text, set_participant_text] = useState("Participants Left: " + participants);
-    var [tails_text, set_tails_text] = useState("Tails: " + t);
-    var [heads_text, set_heads_text] = useState("Heads: " + h);
-    var [round_text, set_rounds_text] = useState("Round: " + round);
 
     const flip = () => {
         var toss = Math.floor(Math.random() * 2) == 0;
@@ -52,48 +63,62 @@ export default function Simulation() {
         }
     }
 
+    const set_rounds = (h: number, t: number) => {
+        if (round == 0 && done == false) {
+            return ("Participants: " + max_participants)
+        }
+        return ("Participants: " + (h + t))
+
+    }
+
     const set_textbox = () => {
         onToggle(false)
         setTimeout(() => onToggle(true), 100);
-        set_participant_text("Participants: " + participants)
-        set_tails_text("Tails: " + t)
-        set_heads_text("Heads: " + h)
-        set_rounds_text("Round: " + round)
     }
 
     const calculate = () => {
+
+
         t = 0;
         h = 0;
 
-        for (var i = 0; i < participants; i++) {
-            if (flip() == "tails") {
-                t += 1;
-            } else {
-                h += 1;
+        if (done == true) {
+            done = false
+            participants = max_participants
+            round_text = round;
+            set_textbox();
+
+        } 
+        else {
+            for (var i = 0; i < participants; i++) {
+                if (flip() == "tails") {
+                    t += 1;
+                } else {
+                    h += 1;
+                }
+            }
+
+            round += 1;
+            round_text = round;
+
+            participants = t
+
+            set_textbox();
+
+            if (participants == 1 || participants <= 0) {
+                participants = 0
+                round = 0
+                done = true
             }
         }
-
-        round += 1;
-        participants = t;
-
-        if (participants == 1) {
-            participants = max_participants;
-            round = 0;
-
-
-        } else if (participants <= 0) {
-            participants = max_participants;
-            round = 0;
-        }
-        set_textbox();
     }
 
     return (
-        <main>
+        <main className={inconsolata.className}>
             <ChakraProvider>
-                <Box height="100vh" bgGradient="linear(to-b, gray.200, gray.500)">
-                    <Box bg="blue.500" color="white" textAlign="center" height="6%">
-                        <Text fontSize="calc(1vw + 1vh)" fontWeight="bold" height="100%" display="flex" alignItems="center" justifyContent="center">
+                <Box height="100vh" bg="gray.900">
+                    <Box bg="gray.800" color="white" textAlign="center" height="6%">
+                        <Text fontSize="calc(1vw + 1vh)" height="100%" display="flex" alignItems="center" justifyContent="center">
                             The 1000 Coin Flip Experiment
                         </Text>
                     </Box>
@@ -102,87 +127,81 @@ export default function Simulation() {
                             <Button
                                 mt="5vh"
                                 p={6}
-                                colorScheme='blue'
+                                colorScheme='gray'
                                 variant='solid'
                                 onClick={() => calculate()}
                                 _hover={{
                                     transform: "scale(1.1)",
                                     transition: "transform 0.2s",
                                 }}
-                                borderRadius={24}>
+                                borderRadius={4}>
 
                                 <Text
-                                    fontSize="calc(1vw + 1vh)"
-                                    fontWeight="bold">
+                                    fontSize="calc(1vw + 1vh)">
                                     Flip Coin
                                 </Text>
                             </Button>
-
                             <Box width={"90%"}
                                 display="flex"
                                 flexDirection="column"
                                 alignItems="center"
                                 justifyContent="center">
-                                <Collapse in={isOpen} transition={{ enter: { duration: .5, delay: .5}, exit: { duration: 0.1 } }}>
-                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
+                                <Collapse in={isOpen} transition={{ enter: { duration: .5, delay: .1 }, exit: { duration: 0 } }}>
+                                    <Divider mt="3vh" orientation='horizontal' width={"100%"} border="1px solid" borderColor="white" />
 
-                                <SimpleGrid
-                                    mt="3vh"
-                                    justifyContent={"center"}
-                                    alignContent={"center"}
-                                    display={"flex"}
-                                    flexWrap={"wrap"}
-                                    minChildWidth="50px"
-                                >
+                                    <SimpleGrid
+                                        mt="3vh"
+                                        justifyContent={"center"}
+                                        alignContent={"center"}
+                                        display={"flex"}
+                                        flexWrap={"wrap"}
+                                        minChildWidth="50px"
+                                    >
 
-                                    <RenderComponents count={participants} />
+                                        <RenderComponents count={participants} />
 
-                                </SimpleGrid>
+                                    </SimpleGrid>
 
-                                <Divider mt="3vh" orientation='horizontal' width={"100%"} borderColor="black" />
-                            </Collapse>
-                        </Box>
-
-                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.3, delay: 1.2 }, exit: { duration: 0.1 } }}>
-                            <Box mt="3vh" bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
-                                <Text
-                                    fontSize="calc(1vw + 1vh)"
-                                    fontWeight="bold">
-                                    {participant_text}
-                                </Text>
+                                    <Divider mt="3vh" orientation='horizontal' width={"100%"} border="1px solid" borderColor="white" />
+                                </Collapse>
                             </Box>
-                        </ScaleFade>
-                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.2, delay: 1.3 }, exit: { duration: 0.1 } }}>
-                            <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
-                                <Text
-                                    fontSize="calc(1vw + 1vh)"
-                                    fontWeight="bold">
-                                    {round_text}
-                                </Text>
-                            </Box>
-                        </ScaleFade>
-                        <ScaleFade initialScale={0.1} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 1.4 }, exit: { duration: 0.1 } }}>
-                            <HStack spacing={4} align="center" justify="center">
-                                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8} >
+
+                            <ScaleFade initialScale={0} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 0.2 }, exit: { duration: 0 } }}>
+                                <Box mt="3vh" bg="gray.800" color="white" p={4} textAlign="center" borderRadius={8}>
                                     <Text
-                                        fontSize="calc(1vw + 1vh)"
-                                        fontWeight="bold">
-                                        {tails_text}
+                                        fontSize="calc(1vw + 1vh)">
+                                        {set_rounds(h, t)}
                                     </Text>
                                 </Box>
-                                <Box bg="blue.500" color="white" p={4} textAlign="center" borderRadius={8}>
+                            </ScaleFade>
+                            <ScaleFade initialScale={0} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: 0.3 }, exit: { duration: 0 } }}>
+                                <Box bg="gray.800" color="white" p={4} textAlign="center" borderRadius={8} >
                                     <Text
-                                        fontSize="calc(1vw + 1vh)"
-                                        fontWeight="bold">
-                                        {heads_text}
+                                        fontSize="calc(1vw + 1vh)">
+                                        {"Round: " + round_text}
                                     </Text>
                                 </Box>
-                            </HStack>
-                        </ScaleFade>
-                    </VStack>
-                </Flex>
-            </Box>
-        </ChakraProvider>
+                            </ScaleFade>
+                            <ScaleFade initialScale={0} in={isOpen} reverse={true} transition={{ enter: { duration: 0.4, delay: .4 }, exit: { duration: 0 } }}>
+                                <HStack spacing={4} align="center" justify="center">
+                                    <Box bg="gray.800" color="white" p={4} textAlign="center" borderRadius={8} >
+                                        <Text
+                                            fontSize="calc(1vw + 1vh)">
+                                            {"Heads: " + h}
+                                        </Text>
+                                    </Box>
+                                    <Box bg="gray.800" color="white" p={4} textAlign="center" borderRadius={8}>
+                                        <Text
+                                            fontSize="calc(1vw + 1vh)">
+                                            {"Tails: " + t}
+                                        </Text>
+                                    </Box>
+                                </HStack>
+                            </ScaleFade>
+                        </VStack>
+                    </Flex>
+                </Box>
+            </ChakraProvider>
         </main >
     );
 }
